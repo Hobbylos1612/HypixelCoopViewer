@@ -4,7 +4,7 @@ import pendulum
 username = input("Enter PlayerName: ").strip()
 profile_search = True
 Coop_Members = []
-Apikey = "b232d270-6e92-4ca9-a3dc-9e426c084ddd"
+Apikey = "d62d699f-2c41-42f6-a891-5e178f29be92"
 cute_names = ()
 profile_id = ""
 #-------- TESTING --------
@@ -24,7 +24,6 @@ params = {
     "key": Apikey,
     "uuid": uuid
 }
-
 
 response = requests.get(url, params=params)
 data = response.json()
