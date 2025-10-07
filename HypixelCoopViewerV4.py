@@ -79,32 +79,38 @@ if profile_search and not profile_id == "" :
     profilesMembers = data_profile["profile"].get("members", {})
     profile_Uuids = list(profilesMembers.keys())
     for uuids in profile_Uuids:
+        Coop_Members = [m for m in Coop_Members if not m.startswith(playername)]
         Api = f"https://api.hypixel.net/player?uuid={uuids}&key={Apikey}"
         Api_responese = requests.get(Api)
         Apidata = Api_responese.json()
         uuid_Profiles = Apidata["player"]["stats"]["SkyBlock"].get("profiles", {})
         UserName = Apidata["player"]["displayname"]
         uuid_profile_ids = list(uuid_Profiles.keys())
+        # Status
+        login_msCoop = Apidata["player"].get("lastLogin", 0)
+        logout_msCoop = Apidata["player"].get("lastLogout", 0)
+        logoutAgoCoop = pendulum.from_timestamp(logout_msCoop / 1000, tz="Europe/Berlin")
+        str_logoutAgoCoop = logoutAgoCoop.to_datetime_string()
+        logout_diff = logoutAgoCoop.diff_for_humans()
+        statusCoop = "ONLINE" if login_msCoop > logout_msCoop else "OFFLINE"
         if profile_id in uuid_profile_ids:
-            Coop_Members.append(UserName)
-    Coop_Members.remove(playername)
+            Coop_Members.append(f"{UserName} | {statusCoop} | {logout_diff}")
 #-------- Coop Members --------
 
 # Print results
 if uuid:
     print("\n")
-    print("---------------------------------------------")
+    print("__________________________________________________")
     print(f"Player name: {playername}")
     print(f"Status: {status}")
     print(f"LastlogIn: {str_login}")
     print(f"LastlogOutDiff: {logoutAgo.diff_for_humans()}")
     print(f"LastlogOut: {str_logoutAgo}")
-    print("Profile Names: " + " ".join(cute_names))
+    print("Profile Names: " + " | ".join(cute_names))
     if profile_search:
         print(f"Coop Members: {len(Coop_Members)}")
         print("   " + "\n   ".join(Coop_Members))
-        print("---------------------------------------------")
-        print("\n")
+        print("__________________________________________________\n")
 else:
     print("\n")
     print("---------------------------------------------")

@@ -4,7 +4,7 @@ import pendulum
 username = input("Enter PlayerName: ").strip()
 profile_search = True
 Coop_Members = []
-Apikey = "d62d699f-2c41-42f6-a891-5e178f29be92"
+Apikey = "70de2484-b492-476e-8996-a1ce850888db"
 cute_names = ()
 profile_id = ""
 #-------- TESTING --------
