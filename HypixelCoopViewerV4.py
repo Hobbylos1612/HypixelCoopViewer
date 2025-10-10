@@ -92,6 +92,7 @@ if profile_search and not profile_id == "" :
         logoutAgoCoop = pendulum.from_timestamp(logout_msCoop / 1000, tz="Europe/Berlin")
         str_logoutAgoCoop = logoutAgoCoop.to_datetime_string()
         logout_diff = logoutAgoCoop.diff_for_humans()
+        # Status
         statusCoop = "ONLINE" if login_msCoop > logout_msCoop else "OFFLINE"
         if profile_id in uuid_profile_ids:
             Coop_Members.append(f"{UserName} | {statusCoop} | {logout_diff}")
